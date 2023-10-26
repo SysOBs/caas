@@ -3,14 +3,8 @@ from math import ceil
 import numpy as np
 from pymoo.core.problem import Problem
 
-from caas.definitions import (Service, Workflow, max_system_cost,
-                              system_availability, system_cost,
+from caas.definitions import (Service, Workflow, max_system_cost, system_cost,
                               workflow_availabilities)
-
-# from svc_availability_definitions import system_availability
-# from svc_availability_definitions_v2 import (Service, Workflow,
-#                                             max_system_cost, system_cost,
-#                                             workflow_availabilities)
 
 
 class Optimizer(Problem):
@@ -65,9 +59,6 @@ class Optimizer(Problem):
 
         out["G"] = np.column_stack([
             - (1 - unavailability - self.slo),
-            # TODO: Check if this is correct
-            # numpy.sum(self.cpu_counts * x, axis=1) +
-            # numpy.sum(self.mem_counts * x, axis=1) - 1,
             np.sum(self.cpu * x, axis=1) - self.max_cpu,
             np.sum(self.mem * x, axis=1) - self.max_mem,
         ])
